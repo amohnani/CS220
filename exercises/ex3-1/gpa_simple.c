@@ -57,28 +57,38 @@ otherwise
 int main() {
 
   //TO DO: add your code here so that your program
-  printf("Welcome to the GPA calculator!");
-  printf("Enter grade and credits for each course below (ctrl-d to end)");
+  printf("Welcome to the GPA calculator! \n");
+  printf("Enter grade and credits for each course below (ctrl-d to end )\n");
   float credits;
   char grade;
-  int course_num = 0;
+  int course_num = 1;
   float total_credits = 0;
   float grade_point = 0;
-  while (!EOF){
+  printf("course 1: ");
+  while (scanf(" %c %f", &grade, &credits) == 2){
     course_num++;
-    printf("course %d: ", course_num);
-    scanf("%c %f", &grade, &credits);
+    printf("\n course %d: ", course_num);
     if (grade == 'A' || grade == 'a'){
       grade_point += 4.0 * credits;
     } else if(grade == 'B' || grade == 'b') {
-      grade+= 3.0 * credits;
+      grade_point += 3.0 * credits;
     } else if (grade == 'C' || grade == 'c'){
-      grade += 2.0 * credits;
+      grade_point += 2.0 * credits;
     } else if (grade == 'D' || grade == 'd'){
-      grade += 1.0 * credits;
+      grade_point += 1.0 * credits;
     } 
     total_credits += credits;
-  }  
-  printf("Your GPA is %f", (grade_point/total_credits));
+  }
+  if (credits > 0){
+    float gpa = grade_point/total_credits;
+    printf("Your GPA is %f \n",gpa);
+    if (gpa >= 3.5){
+      printf("Congratulations, you're on the Dean's List \n");
+    }else if (gpa < 2){
+      printf("Uh oh, academic probation \n");
+    }
+  }else{
+    printf("There is no GPA to report \n");
+  }
  return 0;
 }
