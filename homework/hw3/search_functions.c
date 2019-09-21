@@ -18,18 +18,51 @@
 int populate_grid(char grid[][MAX_SIZE], char filename_to_read_from[]){
   FILE *input = fopen(filename_to_read_from, "r");
   if (input == NULL){
-    printf("Grid file failed to open.");
+    printf("Grid file failed to open.\n");
     return -1;
   }
-  int width = 1;
-  fscanf(input," %c", &grid[0][0]);
-  while (fscanf(input, " %c", &grid[0][width]) == 1){
+  int line = 0;
+  int lengths[10] = {0};
+  char temp;
+  while(fscanf(input,"%c", &temp) ==  1){
+    if ((temp > 64 && temp < 91) || (temp > 96 && temp < 123)){
+      grid[line][lengths[line]] = temp;
+      lengths[line]++;
+    }
+    if (temp == '\n'){
+      line++;
+    }
+  }
+  /*while (fscanf(input, " %c", &grid[0][0]) == 1){
     width++;
   }
   printf("%d", width);
 
   fclose(input);
-  return width; // replace this stub
+  input = fopen(filename_to_read_from, "r");
+  double test = sqrt(width);
+  width = test;
+  if (test != width || width == 0 || width > 10){
+    printf("Invalid grid.");
+    return -2;
+    }*/
+  /*(int length = 0;
+  for (int i = 0; i < width; i++){
+    length = 0;
+    while (fscanf(input, " %[^\n]c", grid[i][length]) == 1){
+      length++;
+    }
+    }*/
+  for (int i = 0; i < line; i++){
+    for (int j = 0; j < lengths[i]; j++){
+      printf("%c", grid[i][j]);
+     }
+    printf("\n");
+  }
+  printf("%d", line);
+    
+    
+  return line; // replace this stub
 
 }
 
