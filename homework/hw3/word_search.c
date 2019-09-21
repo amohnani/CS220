@@ -26,7 +26,10 @@ int main(int argc, char* argv[]) {
   }
   char word[MAX_SIZE];
   scanf(" %s", &word);
-  find_right(word_grid, grid_size, word, stdout);
+  int count = find_all(word_grid, grid_size, word, stdout);
+  if (count == 0){
+    printf(" %s - Not Found", word);
+  }
   return 0;
 
 }

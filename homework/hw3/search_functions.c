@@ -115,10 +115,10 @@ int find_left (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
   int word_len = strlen(word);
   int counter = 0;
   for (int i = 0; i < n; i++){
-    for (int j = word_len; j < n; j++){
+    for (int j = word_len-1; j < n; j++){
       int found_word = 1;
       if (grid[i][j] == word[0]){
-	for (int k = 1; k < word_len; k--){
+	for (int k = 1; k < word_len; k++){
 	  if (grid[i][j-k] != word[k]){
 	    found_word = 0;
 	    break;
@@ -139,8 +139,26 @@ int find_left (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
  * <Replace this with your own useful comment.> 
  */
 int find_down (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
-
-  return -1; // replace this stub
+  int word_len = strlen(word);
+  int counter = 0;
+  for (int i = 0; i < n; i++){
+    for (int j = 0; j < n-word_len+1; j++){
+      int found_word = 1;
+      if (grid[j][i] == word[0]){
+	for (int k = 1; k < word_len; k++){
+	  if (grid[j+k][i] != word[k]){
+	    found_word = 0;
+	    break;
+	  }
+	}
+	if (found_word == 1){
+	  fprintf(write_to, "%s %d %d D\n", word, j, i);
+	  counter++;
+	}
+      }
+    }
+  }
+  return counter; // replace this stub
 
 }
 
@@ -149,9 +167,26 @@ int find_down (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
  * <Replace this with your own useful comment.> 
  */
 int find_up   (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
-
-  return -1; // replace this stub
-
+   int word_len = strlen(word);
+  int counter = 0;
+  for (int i = 0; i < n; i++){
+    for (int j = word_len-1; j < n; j++){
+      int found_word = 1;
+      if (grid[j][i] == word[0]){
+	for (int k = 1; k < word_len; k++){
+	  if (grid[j-k][i] != word[k]){
+	    found_word = 0;
+	    break;
+	  }
+	}
+	if (found_word == 1){
+	  fprintf(write_to, "%s %d %d U\n", word, j, i);
+	  counter++;
+	}
+      }
+    }
+  }
+  return counter; 
 }
 
 
@@ -160,7 +195,12 @@ int find_up   (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
  */
 int find_all  (char grid[][MAX_SIZE], int n, char word[], FILE *write_to) {
 
-  return -1; // replace this stub
+  int total = 0;
+  total += find_right(grid, n, word, write_to);
+  total += find_left(grid, n, word, write_to);
+  total += find_down(grid, n, word, write_to);
+  total += find_up(grid, n, word, write_to);
+  return total; // replace this stub
 
 } 
 
