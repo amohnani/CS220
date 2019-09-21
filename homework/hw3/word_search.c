@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
   
   // Fill in your main code here!
   if (argc != 2){
-    printf("Please enter a command line argument.");
+    printf("Please enter a command line argument.\n");
     return 1;
   }
   char * filename = argv[1];

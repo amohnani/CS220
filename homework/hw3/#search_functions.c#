@@ -29,6 +29,11 @@ int populate_grid(char grid[][MAX_SIZE], char filename_to_read_from[]){
   printf("%d", width);
 
   fclose(input);
+  input = fopen(filename_to_read_from, "r");
+  double test = sqrt(width);
+  width = test;
+  if (test == width){
+    
   return width; // replace this stub
 
 }
