@@ -20,11 +20,13 @@ int main(int argc, char* argv[]) {
   }
   char * filename = argv[1];
   char word_grid[MAX_SIZE][MAX_SIZE];
-  int grid_status = populate_grid(word_grid, filename);
-  if (grid_status != 0){
-    return grid_status;
+  int grid_size = populate_grid(word_grid, filename);
+  if (grid_size < 0){
+    return grid_size;
   }
-
+  char word[MAX_SIZE];
+  scanf(" %s", &word);
+  find_right(word_grid, grid_size, word, stdout);
   return 0;
 
 }

@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include "search_functions.h"
-
+#include <string.h>
 
 
 /* 
@@ -23,14 +23,25 @@ int populate_grid(char grid[][MAX_SIZE], char filename_to_read_from[]){
   }
   int line = 0;
   int lengths[10] = {0};
-  char temp;
+  char temp = ' ';
   while(fscanf(input,"%c", &temp) ==  1){
     if ((temp > 64 && temp < 91) || (temp > 96 && temp < 123)){
+      if (temp < 91){
+	temp += 32;
+      }
       grid[line][lengths[line]] = temp;
       lengths[line]++;
+      if (lengths[line] > 10){
+	printf("Invalid grid.\n");
+	return -2;
+      }
     }
     if (temp == '\n'){
       line++;
+      if (line > 10){
+	printf("Invalid grid.\n");
+	return -2;
+      }
     }
   }
   /*while (fscanf(input, " %c", &grid[0][0]) == 1){
@@ -54,25 +65,45 @@ int populate_grid(char grid[][MAX_SIZE], char filename_to_read_from[]){
     }
     }*/
   for (int i = 0; i < line; i++){
+    if (lengths[i] != line){
+      printf("Invalid grid.\n");
+      return -2;
+    }
+  }
+  for (int i = 0; i < line; i++){
     for (int j = 0; j < lengths[i]; j++){
       printf("%c", grid[i][j]);
      }
     printf("\n");
-  }
-  printf("%d", line);
-    
-    
+  } 
   return line; // replace this stub
 
 }
 
-
 /* 
- * <Replace this with your own useful comment.> 
+ * Finds all instances of word in the grid in the righward direction
  */
 int find_right(char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
-
-  return -1; // replace this stub
+  int word_len = strlen(word);
+  int counter = 0;
+  for (int i = 0; i < n; i++){
+    for (int j = 0; j < n-word_len+1; j++){
+      int found_word = 1;
+      if (grid[i][j] == word[0]){
+	for (int k = 1; k < word_len; k++){
+	  if (grid[i][j+k] != word[k]){
+	    found_word = 0;
+	    break;
+	  }
+	}
+	if (found_word == 1){
+	  fprintf(write_to, "%s %d %d R\n", word, i, j);
+	  counter++;
+	}
+      }
+    }
+  }
+  return counter; // replace this stub
 
 }
 
@@ -81,9 +112,26 @@ int find_right(char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
  * <Replace this with your own useful comment.> 
  */
 int find_left (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
-
-  return -1; // replace this stub
-
+  int word_len = strlen(word);
+  int counter = 0;
+  for (int i = 0; i < n; i++){
+    for (int j = word_len; j < n; j++){
+      int found_word = 1;
+      if (grid[i][j] == word[0]){
+	for (int k = 1; k < word_len; k--){
+	  if (grid[i][j-k] != word[k]){
+	    found_word = 0;
+	    break;
+	  }
+	}
+	if (found_word == 1){
+	  fprintf(write_to, "%s %d %d L\n", word, i, j);
+	  counter++;
+	}
+      }
+    }
+  }
+  return counter; // replace this stub
 }
 
 
