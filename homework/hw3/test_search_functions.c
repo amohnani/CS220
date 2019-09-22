@@ -1,5 +1,7 @@
 // test_search_functions.c
 // <STUDENT: ADD YOUR INFO HERE: name, JHED, etc.>
+//Abhi Mohnani
+//amohnan1
 
 
 
@@ -80,44 +82,75 @@ void test_file_eq() {
 }
 
 
-
+//tests the function_populate grid
+//passes a nonexistent file, a file with an invalid grid, and a valid grid
+//also checks if the function returns the correct dimension
 void test_populate_grid(){
-
-  assert(1);  //replace this stub!
+  char grid[MAX_SIZE][MAX_SIZE];
+  char fakefilename[20] = "doesntexist.txt";
+  char  badformatfile[20] = "test1.txt";
+  char goodfile[20] = "goodformat.txt";
+  int test1 = populate_grid(grid, fakefilename);
+  assert(test1 == -1);  //replace this stub
+  test1 = populate_grid(grid, badformatfile);
+  assert (test1 == -2);
+  test1 = populate_grid(grid, goodfile);
+  assert (test1 == 4);
 
 }
 
-
+//tests the function find_right
+//creates a grid with multiple occurences of word, and sends to function
+//checks with a word that isn't in the grid
 void test_find_right(){
-
-  assert(1);  //replace this stub!
-
+  char grid[MAX_SIZE][MAX_SIZE] = {"atip", "blah", "tipa", "ftip"};
+  int counter = find_right(grid, 4, "tip", stdout);
+  assert(counter == 3);  
+  counter = find_right(grid, 4, "abcd", stdout);
+  assert (counter == 0);
 }
 
-
+//tests the function find_left
+//creates a grid with multiple occurences of word, and sends to function
+//checks with a word that isn't in the grid
 void test_find_left(){
-
-  assert(1);  //replace this stub!
+  char grid[MAX_SIZE][MAX_SIZE] = {"atip", "blah", "tipa", "ftip"};
+  int counter = find_left(grid, 4, "pit", stdout);
+  assert(counter == 3);
+  counter = find_left(grid, 4, "nahy", stdout);
+  assert(counter == 0);  
 }
 
-
+//tests the function find_down
+//creates a grid with multiple occurences of word, and sends to function
+//checks with a word that isn't in the grid
 void test_find_down(){
-
-  assert(1);  //replace this stub!
-
+  char grid[MAX_SIZE][MAX_SIZE] = {"abcd", "baba", "cbca", "dcef"};
+  int counter = find_down(grid, 4, "abc", stdout);
+  assert(counter == 2);  
+  counter = find_down(grid, 4, "blah", stdout);
+  assert(counter == 0);
 }
 
-
+//tests the function find_up
+//creates a grid with multiple occurences of word, and sends to function
+//checks with a word that isn't in the grid
 void test_find_up(){
-
-  assert(1);  //replace this stub!
-
+  char grid[MAX_SIZE][MAX_SIZE] = {"abcd", "baba", "cbca", "dcef"};
+  int counter = find_up(grid, 4, "cba", stdout);
+  assert(counter == 2);  
+  counter = find_up(grid, 4, "blah", stdout);
+  assert(counter == 0);
 }
 
-
+//tests the function find_all
+//Uses a larger grid with many intertwined occurences of word
+//Then checks with a word that isn't in the grid
 void test_find_all(){
-
-  assert(1);  //replace this stub!
-
+  char grid[MAX_SIZE][MAX_SIZE] ={"dogbf", "oaoce", "goddg", "efoho", "bagod"};
+  int counter = find_all(grid, 5, "dog", stdout);
+  assert(counter == 7);
+  counter = find_all(grid, 5, "blahb", stdout);
+  assert(counter == 0);
 }
 

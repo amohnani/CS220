@@ -17,7 +17,7 @@
  */
 int populate_grid(char grid[][MAX_SIZE], char filename_to_read_from[]){
   FILE *input = fopen(filename_to_read_from, "r");
-  if (input == NULL){
+  if (input == NULL){ //checks if file exists
     printf("Grid file failed to open.\n");
     return -1;
   }
@@ -31,57 +31,37 @@ int populate_grid(char grid[][MAX_SIZE], char filename_to_read_from[]){
       }
       grid[line][lengths[line]] = temp;
       lengths[line]++;
-      if (lengths[line] > 10){
+      if (lengths[line] > 10){ //checks for grid that is too wide
 	printf("Invalid grid.\n");
+	fclose(input);
 	return -2;
       }
     }
     if (temp == '\n'){
-      line++;
+      line++; //checks for grid that is too large
       if (line > 10){
 	printf("Invalid grid.\n");
+	fclose(input);
 	return -2;
       }
     }
   }
-  /*while (fscanf(input, " %c", &grid[0][0]) == 1){
-    width++;
-  }
-  printf("%d", width);
-
-  fclose(input);
-  input = fopen(filename_to_read_from, "r");
-  double test = sqrt(width);
-  width = test;
-  if (test != width || width == 0 || width > 10){
-    printf("Invalid grid.");
-    return -2;
-    }*/
-  /*(int length = 0;
-  for (int i = 0; i < width; i++){
-    length = 0;
-    while (fscanf(input, " %[^\n]c", grid[i][length]) == 1){
-      length++;
-    }
-    }*/
   for (int i = 0; i < line; i++){
-    if (lengths[i] != line){
+    if (lengths[i] != line){ //checks for unequal number of letters
       printf("Invalid grid.\n");
+      fclose(input);
       return -2;
     }
   }
-  for (int i = 0; i < line; i++){
-    for (int j = 0; j < lengths[i]; j++){
-      printf("%c", grid[i][j]);
-     }
-    printf("\n");
-  } 
-  return line; // replace this stub
+  fclose(input);
+  return line; //returns number of rows
 
 }
 
 /* 
- * Finds all instances of word in the grid in the righward direction
+ * Finds all occurences of the word going right
+   The function checks for the first letter of the word at every position
+   Then, the function checks if the word continues in that direction
  */
 int find_right(char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
   int word_len = strlen(word);
@@ -103,13 +83,15 @@ int find_right(char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
       }
     }
   }
-  return counter; // replace this stub
+  return counter; 
 
 }
 
 
 /* 
- * <Replace this with your own useful comment.> 
+ * Finds all occurences of the word going left
+   The function checks for the first letter of the word at every position
+   Then, the function checks if the word continues in that direction 
  */
 int find_left (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
   int word_len = strlen(word);
@@ -136,7 +118,9 @@ int find_left (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
 
 
 /* 
- * <Replace this with your own useful comment.> 
+ * Finds all occurences of the word going down
+   The function checks for the first letter of the word at every position
+   Then, the function checks if the word continues in that direction
  */
 int find_down (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
   int word_len = strlen(word);
@@ -164,7 +148,9 @@ int find_down (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
 
 
 /* 
- * <Replace this with your own useful comment.> 
+ * Finds all occurences of the word going up
+   The function checks for the first letter of the word at every position
+   Then, the function checks if the word continues in that direction
  */
 int find_up   (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
    int word_len = strlen(word);
@@ -191,15 +177,18 @@ int find_up   (char grid[][MAX_SIZE], int n, char word[], FILE *write_to){
 
 
 /* 
- * <Replace this with your own useful comment.> 
+ * Calls all helper functions, and finds all occurences of the word
+ If none are found, the function outputs not found
  */
 int find_all  (char grid[][MAX_SIZE], int n, char word[], FILE *write_to) {
-
   int total = 0;
-  total += find_right(grid, n, word, write_to);
+  total += find_right(grid, n, word, write_to); 
   total += find_left(grid, n, word, write_to);
   total += find_down(grid, n, word, write_to);
   total += find_up(grid, n, word, write_to);
+  if (total == 0){
+    fprintf(write_to, "%s - Not Found\n", word);
+  }
   return total; // replace this stub
 
 } 
