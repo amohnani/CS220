@@ -28,11 +28,17 @@ map<string, vector<string>> populate_map(ifstream *input){
     words[temp] = {};
   }
 
+  //while there is more text remaining
   while (*input >> temp){
+
+    //converts temp into a usable form
     temp = make_lowercase(temp);
     temp = remove_punctuation(temp);
+
+    //iterates through possible digraphs
     for (map<string, vector<string>>::iterator i = words.begin();
 	 i != words.cend(); i++){
+      //if the digraph is in the word, then add the word to the vector
       if (contains_digraph(temp, i->first)){
 	  i->second.push_back(temp);
 	}
@@ -43,6 +49,7 @@ map<string, vector<string>> populate_map(ifstream *input){
 }
 
 
+//function that checks if a word contains a given digraph
 bool contains_digraph(string word, string digraph){
   if (word.find(digraph) != string::npos){
     return true;
@@ -109,7 +116,7 @@ int output_all_digraphs(map<string,vector<string>> words, string command){
     output_all_count(words);
   } else {
     //case of invalid argument
-    cout << "Invalid arguments." << endl;
+    cout << "Invalid arguments" << endl;
     return 1;
   }
   return 0;
