@@ -32,24 +32,32 @@ int main(int argc, char *argv[]){
   }
 
   map<string, vector<string>> words = populate_map(&input);
-  /* words["wh"] = {"what", "when"};
-  words["sch"] = {};
-  words["ou"] = {"thought", "out", "around", "out", "around", "could", "out", "around", "house"};
-  words["ee"] = {"see", "need"};
-  words["ch"] = {"tichener", "chucking", "tickener", "chucking", "teacher", "chance"};*/
+  
 
-  output_all_digraphs(words, argv[2]);
+  //checks if command was valid, and if so, outputs the digraphs in that order
+  if( output_all_digraphs(words, argv[2])){
+    return 1;
+  }
   
   
   cout << "q?>";
   string command;
   int val;
+
+  //repeats while the user wants to input commands
   while (cin >> command){
+    //turns the command to all lowercase
     command = make_lowercase(command);
+
+    //checks if the command was to quit
     if (command == "quit"){
       return 0;
+
+      //checks if the command was a number
     }else if (stringstream(command) >> val){
       output_by_number(words, val);
+
+      //otherwise, uses the command as a digraph
     }else{
       output_digraph(words, command);
     }
