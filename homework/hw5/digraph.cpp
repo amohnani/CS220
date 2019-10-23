@@ -174,7 +174,6 @@ void output_all_count(map<string,vector<string>> words){
   //iterates through each count
   for (map<int,vector<string>>::const_reverse_iterator i = counts.crbegin();
        i != counts.crend(); i++){
-    cout << "(Count = " << i->first << ") ";
     //iterates through all digraphs for each count
     for (vector<string>::const_iterator j = i->second.cbegin();
 	 j != i->second.cend(); j++){
