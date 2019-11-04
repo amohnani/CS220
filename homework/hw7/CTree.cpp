@@ -5,21 +5,36 @@
 using std::string;
 using std::cout;
 using std::endl;
+using std::ostream;
 
 CTree::CTree(char ch): data(ch), kids(NULL), sibs(NULL), prev(NULL) {}
 
-CTree::~CTree(){
-  clear();
+ostream& operator<<(ostream& os, CTree& rt){
+  os << rt.toString();
+  return os;
 }
 
-void CTree::clear(){
-  if (sibs != NULL){
-    sibs->clear();
-    delete sibs;
+bool CTree::operator==(const CTree &root){
+  if (data != root.data){
+    return false;
   }
+  if (root.sibs != sibs && root.kids != kids){
+    return false;
+  }
+  return true;
+}
+
+CTree& CTree::operator^(CTree& rt){
+  addChild(&rt);
+  return *this;
+}
+
+CTree::~CTree(){
   if (kids != NULL){
-    kids->clear();
     delete kids;
+  }
+  if (sibs != NULL){
+    delete sibs;
   }
 }
 
@@ -28,7 +43,7 @@ bool CTree::addChild(char ch){
 }
 
 bool CTree::addChild(CTree *root){
-  if (root->prev != NULL){
+  if (root->prev != NULL || root->sibs != NULL){
     return false;
   }else{
     if (kids != NULL){
@@ -47,13 +62,13 @@ bool CTree::addSibling(CTree *novel){
   }
   CTree *cur = this;
   while (cur != NULL){
-    if (cur->data == ch){
+    if (cur->data == novel->data){
       return false;
     }
     cur = cur->sibs;
   }
   cur = this;
-  if (ch < cur->data){
+  if (novel->data < cur->data){
     CTree *temp = this->prev;
     novel->sibs = cur;
     cur->prev = novel;
@@ -64,7 +79,7 @@ bool CTree::addSibling(CTree *novel){
   while (cur != NULL){
     
     if (cur->sibs != NULL){
-      if (ch > cur->data && ch < cur->sibs->data){
+      if (novel->data > cur->data && novel->data < cur->sibs->data){
       CTree *temp = cur->sibs;
       cur->sibs = novel;
       novel->prev = cur;
@@ -89,16 +104,17 @@ bool CTree::addSibling(char ch){
 string CTree::toString(){
   string output = "";
   output.push_back(data);
+  output += "\n";
   if (kids != NULL){
-    output += "\n";
+    //output += "\n";
     output += kids->toString();
   }
   if (sibs != NULL){
-    output += "\n";
+    //output += "\n";
     output += sibs->toString();
   }
-  if (prev == NULL){
+  /*if (prev == NULL){
   output += "\n";
-  }
+  }*/
   return output;
 }

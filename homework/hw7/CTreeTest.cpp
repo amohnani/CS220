@@ -60,14 +60,10 @@ public:
     // |
     // b
     assert(t1->addChild('b'));
-
-    
-    
     assert(t1->toString() == "A\nb\n");
     // can't add again
     assert(!t1->addChild('b'));
     assert(t1->toString() == "A\nb\n");
-
     // A
     // |
     // b - c
@@ -77,11 +73,11 @@ public:
     assert(!t1->addChild('c'));
     assert(t1->toString() == "A\nb\nc\n");
     
-    
     // A
     // |
     // B - b - c
     assert(t1->addChild('B'));
+    
     // 'B' comes before 'b'
     assert(t1->toString() == "A\nB\nb\nc\n");
     // can't add repeats
@@ -98,8 +94,6 @@ public:
     // make sure that we can't add siblings to the root
     assert(!t1->addSibling('C'));
     assert(t1->toString() == "A\nB\nb\nc\n");
-    
-    
 
     
     // Adding in an already built subTree
@@ -145,12 +139,13 @@ public:
     assert(t1->toString() == "A\nB\nb\nc\n");
     // add t1 to t2
     assert(t2->addChild(t1));
+    
     // t1 should now have siblings
     assert(t1->toString() == "A\nB\nb\nc\nB\nC\nd\n");
     // t2 should be updated
     assert(t2->toString() == "R\nA\nB\nb\nc\nB\nC\nd\n");
 
-
+    
 
     // R
     // |
@@ -158,6 +153,7 @@ public:
     //     |
     //     B - b - c
     assert(t2->addChild('@'));
+    
     assert(t2->toString() == "R\n@\nA\nB\nb\nc\nB\nC\nd\n");
     // shouldn't be able to add duplicate children
     assert(!t2->addChild('@'));
@@ -181,7 +177,9 @@ public:
     //     B - b - c
     assert(t2->addChild('e'));
     assert(t2->toString() == "R\n@\nA\nB\nb\nc\nB\nC\nD\nd\ne\n");
+    
     delete t2;
+    
   }
 
   // tests the caret operator

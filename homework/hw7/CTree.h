@@ -44,7 +44,7 @@ class CTree {
   // returns false on any type of failure, including invalid root
   bool addSibling(char ch);
   bool addSibling(CTree *root);
-
+  void clear();
 };
 
 #endif
