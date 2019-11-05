@@ -63,6 +63,7 @@ template <typename T>
 bool Tree<T>::addChild(Tree<T> *root){
   //checks if tree to be added is a root
   if (root->prev != NULL || root->sibs != NULL){
+     delete root;
     return false;
   }else{
     //checks if kids exist
@@ -82,12 +83,14 @@ template <typename T>
 bool Tree<T>::addSibling(Tree<T> *novel){
   //checks if tree is a true root
   if (prev == NULL){
+     delete novel;
     return false;
   }
   //iterates through data to ensure value is not already in tree
   Tree<T> *cur = this;
   while (cur != NULL){
     if (cur->data == novel->data){
+       delete novel;
       return false;
     }
     cur = cur->sibs;
