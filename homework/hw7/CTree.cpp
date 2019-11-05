@@ -50,14 +50,18 @@ CTree::~CTree(){
 //adds child using character value
 bool CTree::addChild(char ch){
   //adds child by creating a new tree
-  return addChild(new CTree(ch));
+  CTree *novel = new CTree(ch);
+  if (addChild(novel)){
+     return true;
+  }
+  delete novel;
+  return false;
 }
 
 //adds a new root to an existing tree
 bool CTree::addChild(CTree *root){
   //checks if tree to be added is a root
   if (root->prev != NULL || root->sibs != NULL){
-    delete root;
     return false;
   }else{
     //checks if kids exist
@@ -83,7 +87,6 @@ bool CTree::addSibling(CTree *novel){
   CTree *cur = this;
   while (cur != NULL){
     if (cur->data == novel->data){
-      delete novel;
       return false;
     }
     cur = cur->sibs;
