@@ -1,4 +1,5 @@
 #include "Tree.h"
+#include "Tree.inc"
 #include <string>
 #include <cassert>
 #include <iostream>
@@ -20,6 +21,7 @@ public:
     assert(t1->toString() == "A\n");
     // Tree of int
     Tree<int>* t2 = new Tree<int>(32);
+    
     assert(t2->toString() == "32\n");
     // Tree of float
     Tree<short>* t3 = new Tree<short>(255);
